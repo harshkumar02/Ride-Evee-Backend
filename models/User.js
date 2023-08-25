@@ -4,11 +4,6 @@ import mongoose from 'mongoose';
 
 const userSchema = new mongoose.Schema(
     {   
-        u_id:{
-            type:String,
-            required:[true, "User Id is must"],
-            trim:true,
-        },
         name:{
             type:String,
             required:[true, "Name is must"],
@@ -61,22 +56,7 @@ const userSchema = new mongoose.Schema(
             type:Boolean,
             default:false
         },
-        isSuperAdmin:{
-            type:Boolean,
-            default:false
-        },
-        isPassenger:{
-            type:Boolean,
-            default:false
-        },
-        isDriver:{
-            type:Boolean,
-            default:false
-        },
-        createdAt:{
-            type:Date,
-            default:Date.now(),
-        }
+        timestamps: { createdAt: 'created_at', updatedAt: 'updated_at' }
     }
 )
 

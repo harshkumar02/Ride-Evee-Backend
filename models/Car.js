@@ -2,57 +2,44 @@ import mongoose from 'mongoose';
 
 // schema
 const CarSchema = new mongoose.Schema({
-    c_id:{
+    carModel:{
         type:String,
         required:true,
         trim:true,
     },
-    car_model:{
+    carBrand:{
         type:String,
         required:true,
         trim:true,
     },
-    car_brand:{
+    carCategory:{
         type:String,
         required:true,
         trim:true,
     },
-    car_cat:{
+    registrationNumber:{
         type:String,
         required:true,
         trim:true,
     },
-    reg_num:{
-        type:String,
-        required:true,
-        trim:true,
-    },
-    assoc_driver:{
+    associatedDriver:{
         driver_id:{
-            type:String,
-            required:true,
-            trim:true,
+            type: mongoose.Schema.Types.ObjectId, required: true, ref: 'driver', 
         },
         driver_name:{
-            type:String,
-            required:true,
-            trim:true,
-        },
+            type: mongoose.Schema.Types.name, required: true, ref: 'driver', 
+         },
     },
-    current_location:{
+    currentLocation:{
+        type:String,
+        trim:true,
+    },
+    insuranceDetailLink:{
         type:String,
         required:true,
         trim:true,
     },
-    insurance_det_link:{
-        type:String,
-        required:true,
-        trim:true,
-    },
-    createdAt:{
-        type:Date,
-        default:Date.now(),
-    }
+    timestamps: { createdAt: 'created_at', updatedAt: 'updated_at' }
 });
 
 // Model

@@ -3,17 +3,13 @@ import mongoose from 'mongoose';
 // Schema
 const driverSchema = new mongoose.Schema(
     {
-        DriverId: {
-            type:String,
-            required:[true,"id must be provided"] ,
-            trim:true
-        },
+        
         name : {
             type:String,
             required:[true,"name must be provided"] ,
             trim:true
         },
-        pnumber : {
+        phone : {
             type:Number,
             minlength: 10,
             required:[true,"number must be provided"] ,
@@ -25,19 +21,16 @@ const driverSchema = new mongoose.Schema(
             required:[true,"email must be provided"],
             trim:true,
         },
-        licen:{
+        licenseId:{
             type:String,
-            required:[true,"license must be provided"],
             trim:true,
         },
-        adhaar :{
+        aadharID:{
             type:String,
-            required:[true,"adhaar must be provided"],
             trim:true,
         },
-        photoL :{
+        photoLink :{
             type:String,
-            required:[true,"photo link must be provided"],
             trim:true,
         },
         currentLocation:{
@@ -47,22 +40,18 @@ const driverSchema = new mongoose.Schema(
         address :{
             city :{
                 type:String,
-                required:true,
                 trim:true,
             },
             state:{
                 type:String,
-                required:true,
                 trim:true,
             },
             pincode:{
                 type:String,
-                required:true,
                 trim:true,
             },
             location:{
                 type:String,
-                required:true,
                 trim:true,
             },
         },
@@ -70,10 +59,7 @@ const driverSchema = new mongoose.Schema(
             type:Boolean,
             default:false
         },
-        createdAt:{
-            type:Date,
-            default:Date.now(),
-        }
+        timestamps: { createdAt: 'created_at', updatedAt: 'updated_at' }
     }
 );
 // Modelling
