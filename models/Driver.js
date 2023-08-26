@@ -1,15 +1,12 @@
 import mongoose from 'mongoose';
 
-// Schema
-const driverSchema = new mongoose.Schema(
-    {
-        
-        name : {
+const driverSchema = new mongoose.Schema({
+        name: {
             type:String,
             required:[true,"name must be provided"] ,
             trim:true
         },
-        phone : {
+        phone: {
             type:Number,
             minlength: 10,
             required:[true,"number must be provided"] ,
@@ -21,7 +18,7 @@ const driverSchema = new mongoose.Schema(
             required:[true,"email must be provided"],
             trim:true,
         },
-        licenseId:{
+        licenseID:{
             type:String,
             trim:true,
         },
@@ -29,7 +26,7 @@ const driverSchema = new mongoose.Schema(
             type:String,
             trim:true,
         },
-        photoLink :{
+        photo:{
             type:String,
             trim:true,
         },
@@ -59,10 +56,11 @@ const driverSchema = new mongoose.Schema(
             type:Boolean,
             default:false
         },
-        timestamps: { createdAt: 'created_at', updatedAt: 'updated_at' }
-    }
+},
+{
+    timestamps: { createdAt: 'created_at', updatedAt: 'updated_at' }
+}
 );
-// Modelling
-const drivermodel= mongoose.model('driver',driverSchema);
 
-export default drivermodel;
+const driverModel= mongoose.model('driver',driverSchema);
+export default driverModel;

@@ -1,31 +1,45 @@
 import mongoose from 'mongoose';
 
-// Schema
+const PaymentSchema = new mongoose.Schema({
+    paymentDate: {
+        type: Date.now(),
+        required: true,
+    },
+    paymentAmount: {
+        type: Number,
+        required: true,
+    },
+    paymentMethod: {
+        type: String,
+        required: true,
+        trim: true,
+    },
+    paymentDescription:{
+        type:String,
+        trim:true,
+    },
+});
 
 const BookingSchema = new mongoose.Schema({
-    u_id:{
+    userID:{
         type: mongoose.Schema.Types.ObjectId, required: true, ref: 'User',
     },
-    assoc_driver:{
-        driver_id:{
-            type: mongoose.Schema.Types.ObjectId, required: true, ref: 'driver', 
-        },
-        driver_name:{
-            type: mongoose.Schema.Types.ObjectId, required: true, ref: 'name', 
-         },
+    driverID: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Driver', 
     },
-    start_from:{
+    startLocation:{
         type:String,
         required:[true,"Starting point must be provided"],
         trim:true,
     },
-    destination:{
+    endLocation:{
         type:String,
         required:[true,"Destination must be provided"],
         trim:true,
     },
-    carCategory:{
-        type: mongoose.Schema.Types.carCategory, required: true, ref: 'Car', 
+    carID:{
+        type: mongoose.Schema.Types.ObjectId, required: true, ref: 'Car', 
     },
     tariffID:{
         type: mongoose.Schema.Types.ObjectId, required: true, ref: 'Tariff',
@@ -39,11 +53,11 @@ const BookingSchema = new mongoose.Schema({
         type:Number,
         trim:true,
     },
+    payment: [PaymentSchema],
+},
+{
     timestamps: { createdAt: 'created_at', updatedAt: 'updated_at' }
 })
 
-// Modelling
-
 const BookingModel = mongoose.model('Booking',BookingSchema);
-
 export default BookingModel;

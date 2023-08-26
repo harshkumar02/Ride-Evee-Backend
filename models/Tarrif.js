@@ -1,13 +1,11 @@
 import mongoose from 'mongoose';
 
-// schema
-
 const tariffSchema = new mongoose.Schema({
     location:{
         type:String,
         trim:true,
         enum:{
-            values: ["lucknow","kanpur","allahabad","varanasi","gorakhpur","mumbai","pune","kalyan","bangalore"],
+            values: ["Lucknow","Kanpur","Allahabad","Varanasi","Gorakhpur","Mumbai","Pune","Kalyan","Bangalore"],
             message:`City is not supported`,
         },
     },
@@ -15,7 +13,14 @@ const tariffSchema = new mongoose.Schema({
         type:String,
         trim:true,
         enum:{
-            values: ["sedan","mini suv 4 seater","mini suv 7 seater","suv","premium sedan","premium suv","tampo traveller 13 seater","tampo traveller 17 seater"],
+            values: ["Sedan",
+                "Mini Suv 4 Seater",
+                "Mini Suv 7 Seater",
+                "SUV",
+                "Premium Sedan",
+                "Premium SUV",
+                "Tampo Traveller 13 Seater",
+                "Tampo Traveller 17 Seater"],
             message:`Car is not supported`,
         },
     },
@@ -23,17 +28,25 @@ const tariffSchema = new mongoose.Schema({
         type:String,
         trim:true,
         enum:{
-            values: ["local","out station","airport transfer"],
+            values: ["Local","Out Station","Airport Transfer"],
             message:`trip is not supported`,
         },
+        required: true, // You might want to make this required
     },
     subTripType:{
         type:String,
         trim:true,
-        enum:{
-            values: ["8hrs/80km","12hrs/120km","oneway","roundtrip","cab from airport","cab to airport"],
-            message:`UnFunctioned Sub Trip`,
-        }
+        validate: function() {
+            if (this.tripType === "Local") {
+                return this.subTripType === "8hrs/80km" || this.subTripType === "12hrs/120km";
+            } else if (this.tripType === "Out Station") {
+                return this.subTripType === "Oneway" || this.subTripType === "Roundtrip";
+            } else if (this.tripType === "Airport Transfer") {
+                return this.subTripType === "Cab from Airport" || this.subTripType === "ab to Airport";
+            }
+            return false;
+        },
+        message: `Invalid sub trip type for the selected trip type`,
     },
     minimumFare:{
         type:Number,
@@ -67,12 +80,11 @@ const tariffSchema = new mongoose.Schema({
         type:Number,
         trim:true,
     },
+},
+{
     timestamps: { createdAt: 'created_at', updatedAt: 'updated_at' }
-
-});
-
-// Modelling
+}
+)
 
 const TariffModel = mongoose.model("Tariff",tariffSchema);
-
 export default TariffModel;
