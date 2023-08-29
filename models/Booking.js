@@ -22,7 +22,8 @@ const PaymentSchema = new mongoose.Schema({
 
 const BookingSchema = new mongoose.Schema({
     userID:{
-        type: mongoose.Schema.Types.ObjectId, required: true, ref: 'User',
+        type: mongoose.Schema.Types.ObjectId, 
+        ref: 'User',
     },
     driverID: {
         type: mongoose.Schema.Types.ObjectId,
@@ -30,23 +31,22 @@ const BookingSchema = new mongoose.Schema({
     },
     startLocation:{
         type:String,
-        required:[true,"Starting point must be provided"],
         trim:true,
     },
     endLocation:{
         type:String,
-        required:[true,"Destination must be provided"],
         trim:true,
     },
     carID:{
-        type: mongoose.Schema.Types.ObjectId, required: true, ref: 'Car', 
+        type: mongoose.Schema.Types.ObjectId, 
+        ref: 'Car', 
     },
     tariffID:{
-        type: mongoose.Schema.Types.ObjectId, required: true, ref: 'Tariff',
+        type: mongoose.Schema.Types.ObjectId, 
+        ref: 'Tariff',
     },
     approxAmount:{
         type:Number,
-        required:[true,"Expected Complete Charge"],
         trim:true,
     },
     finalAmount:{

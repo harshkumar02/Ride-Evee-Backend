@@ -3,25 +3,21 @@ import bcrypt from 'bcryptjs';
 
 const userSchema = new mongoose.Schema({   
     name:{
-        type:String,
-        required:[true, "Name is must"],
-        trim:true,
+        type: String,
+        trim: true,
     },
     email:{
-        type:String,
-        unique: [true, "Email already exist"],
-        required:[true, "Email is must"],
-        trim:true,
+        type: String,
+        unique: true,
+        trim: true,
     },
     phone:{
         type:String,
         unique: true,
-        required:[true, "Phone is must"],
         trim:true,
     },
     password:{
         type:String,
-        required:[true, "Password is must"],
         trim:true,
     },
     currentLocation:{
@@ -31,22 +27,18 @@ const userSchema = new mongoose.Schema({
     address :{
         city :{
             type:String,
-            required:true,
             trim:true,
         },
         state:{
             type:String,
-            required:true,
             trim:true,
         },
         pincode:{
             type:String,
-            required:true,
             trim:true,
         },
         location:{
             type:String,
-            required:true,
             trim:true,
         },
     },
@@ -55,10 +47,9 @@ const userSchema = new mongoose.Schema({
         default:false
     },
     },
-    {
-        timestamps: { createdAt: 'created_at', updatedAt: 'updated_at' }
-    }
-)
+{
+    timestamps: { createdAt: 'created_at', updatedAt: 'updated_at' }
+})
 
 userSchema.pre('save', async function (next) {
     if (!this.isModified('password')) {
@@ -69,5 +60,5 @@ userSchema.pre('save', async function (next) {
     this.password = await bcrypt.hash(this.password, salt)
 })
 
-const UserModel = mongoose.model('User',userSchema);
+const UserModel = mongoose.model('User', userSchema);
 export default UserModel;

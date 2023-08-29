@@ -3,19 +3,22 @@ import mongoose from "mongoose";
 const driverSchema = new mongoose.Schema({
         name: {
             type:String,
-            required:[true,"name must be provided"] ,
+            required:[true,"name must be provided"],
             trim:true
         },
         phone: {
             type:Number,
             minlength: 10,
-            required:[true,"number must be provided"] ,
             trim:true,
         },
         email:{
             type:String,
             unique: [true, "Email already exist"],
             required:[true,"email must be provided"],
+            trim:true,
+        },
+        password:{
+            type:String,
             trim:true,
         },
         licenseID:{
@@ -59,8 +62,7 @@ const driverSchema = new mongoose.Schema({
 },
 {
     timestamps: { createdAt: 'created_at', updatedAt: 'updated_at' }
-}
-);
+})
 
 const driverModel= mongoose.model('driver',driverSchema);
 export default driverModel;

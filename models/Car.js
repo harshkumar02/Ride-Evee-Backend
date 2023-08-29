@@ -3,12 +3,10 @@ import mongoose from 'mongoose';
 const CarSchema = new mongoose.Schema({
     carModel:{
         type:String,
-        required:true,
         trim:true,
     },
     carBrand:{
         type:String,
-        required:true,
         trim:true,
     },
     carCategory:{

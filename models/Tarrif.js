@@ -2,27 +2,12 @@ import mongoose from 'mongoose';
 
 const tariffSchema = new mongoose.Schema({
     location:{
-        type:String,
-        trim:true,
-        enum:{
-            values: ["Lucknow","Kanpur","Allahabad","Varanasi","Gorakhpur","Mumbai","Pune","Kalyan","Bangalore"],
-            message:`City is not supported`,
-        },
+        type: mongoose.Schema.Types.ObjectId, 
+        ref: 'Location',
     },
     carCategory:{
-        type:String,
-        trim:true,
-        enum:{
-            values: ["Sedan",
-                "Mini Suv 4 Seater",
-                "Mini Suv 7 Seater",
-                "SUV",
-                "Premium Sedan",
-                "Premium SUV",
-                "Tampo Traveller 13 Seater",
-                "Tampo Traveller 17 Seater"],
-            message:`Car is not supported`,
-        },
+        type: mongoose.Schema.Types.ObjectId, 
+        ref: 'carCategory',
     },
     tripType:{
         type:String,
@@ -31,7 +16,6 @@ const tariffSchema = new mongoose.Schema({
             values: ["Local","Out Station","Airport Transfer"],
             message:`trip is not supported`,
         },
-        required: true, // You might want to make this required
     },
     subTripType:{
         type:String,
@@ -87,8 +71,7 @@ const tariffSchema = new mongoose.Schema({
 },
 {
     timestamps: { createdAt: 'created_at', updatedAt: 'updated_at' }
-}
-)
+})
 
-const TariffModel = mongoose.model("Tariff",tariffSchema);
+const TariffModel = mongoose.model("Tariff", tariffSchema);
 export default TariffModel;
