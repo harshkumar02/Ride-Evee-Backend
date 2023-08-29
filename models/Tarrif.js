@@ -1,93 +1,90 @@
 import mongoose from 'mongoose';
 
-// schema
-
 const tariffSchema = new mongoose.Schema({
     location:{
         type:String,
-        required:[true, "location is must"],
         trim:true,
         enum:{
-            values: ["lucknow","kanpur","allahabad","varanasi","gorakhpur","mumbai","pune","kalyan","bangalore"],
+            values: ["Lucknow","Kanpur","Allahabad","Varanasi","Gorakhpur","Mumbai","Pune","Kalyan","Bangalore"],
             message:`City is not supported`,
         },
     },
-    carCat:{
+    carCategory:{
         type:String,
-        required:[true, "Which car to choose"],
         trim:true,
         enum:{
-            values: ["sedan","mini suv 4 seater","mini suv 7 seater","suv","premium sedan","premium suv","tampo traveller 13 seater","tampo traveller 17 seater"],
+            values: ["Sedan",
+                "Mini Suv 4 Seater",
+                "Mini Suv 7 Seater",
+                "SUV",
+                "Premium Sedan",
+                "Premium SUV",
+                "Tampo Traveller 13 Seater",
+                "Tampo Traveller 17 Seater"],
             message:`Car is not supported`,
         },
     },
     tripType:{
         type:String,
-        required:[true, "Type of trip"],
         trim:true,
         enum:{
-            values: ["local","out station","airport transfer"],
+            values: ["Local","Out Station","Airport Transfer"],
             message:`trip is not supported`,
         },
+        required: true, // You might want to make this required
     },
     subTripType:{
         type:String,
-        required:[true, "select sub trip type"],
         trim:true,
-        enum:{
-            values: ["8hrs/80km","12hrs/120km","oneway","roundtrip","cab from airport","cab to airport"],
-            message:`UnFunctioned Sub Trip`,
-        }
+        validate: function() {
+            if (this.tripType === "Local") {
+                return this.subTripType === "8hrs/80km" || this.subTripType === "12hrs/120km";
+            } else if (this.tripType === "Out Station") {
+                return this.subTripType === "Oneway" || this.subTripType === "Roundtrip";
+            } else if (this.tripType === "Airport Transfer") {
+                return this.subTripType === "Cab from Airport" || this.subTripType === "ab to Airport";
+            }
+            return false;
+        },
+        message: `Invalid sub trip type for the selected trip type`,
     },
-    min_fare:{
+    minimumFare:{
         type:Number,
-        required:[true, "Minimum Fare of Ride"],
-        trim:true,
-    },
-    perKM:{
-        type:Number,
-        required:[true, "Per KM Fare of Ride"],
-        trim:true,
-    },
-    perKMnight:{
-        type:Number,
-        required:[true, "Per KM fare of Night Ride"],
         trim:true,
     },
-    exKM:{
+    pricePerKM:{
         type:Number,
-        required:[true, "Extra KM Fare of Ride"],
         trim:true,
     },
-    exHrs:{
+    pricePerNightKM:{
         type:Number,
-        required:[true, "Extra Hrs Charge of Ride"],
+        trim:true,
+    },
+    pricePerExtraKM:{
+        type:Number,
+        trim:true,
+    },
+    pricePerExtraHour:{
+        type:Number,
         trim:true,
     },
     driverAllowance:{
         type:Number,
-        required:[true, "Driver Allowance for one way Ride"],
         trim:true,
     },
     nightAllowance:{
         type:Number,
-        required:[true, "Night Allowance for Driver"],
         trim:true,
     },
     gstper:{
         type:Number,
-        required:[true, "GST percent of Ride"],
         trim:true,
     },
-    createdAt:{
-        type:Date,
-        default:Date.now(),
-    }
-
-});
-
-// Modelling
+},
+{
+    timestamps: { createdAt: 'created_at', updatedAt: 'updated_at' }
+}
+)
 
 const TariffModel = mongoose.model("Tariff",tariffSchema);
-
 export default TariffModel;
