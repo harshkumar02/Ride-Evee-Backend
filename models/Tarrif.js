@@ -38,7 +38,7 @@ const tariffSchema = new mongoose.Schema({
         trim:true,
         validate: function() {
             if (this.tripType === "Local") {
-                return this.subTripType === "8hrs/80km" || this.subTripType === "12hrs/120km";
+                return this.subTripType === "8hrs/80km" || this.subTripType === "12hrs/120km" || this.subTripType === "4hrs/40km" || this.subTripType === "2hrs/20km";
             } else if (this.tripType === "Out Station") {
                 return this.subTripType === "Oneway" || this.subTripType === "Roundtrip";
             } else if (this.tripType === "Airport Transfer") {
@@ -76,7 +76,11 @@ const tariffSchema = new mongoose.Schema({
         type:Number,
         trim:true,
     },
-    gstper:{
+    gst:{
+        type:Number,
+        trim:true,
+    },
+    approxPrice:{
         type:Number,
         trim:true,
     },

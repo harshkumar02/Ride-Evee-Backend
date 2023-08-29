@@ -31,6 +31,8 @@ const CarSchema = new mongoose.Schema({
         type:String,
         trim:true,
     },
+},
+{
     timestamps: { createdAt: 'created_at', updatedAt: 'updated_at' }
 });
 
