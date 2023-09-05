@@ -1,8 +1,17 @@
 import mongoose from "mongoose";
 
 const carCategorySchema = new mongoose.Schema({
-    carCategory: {
+    category: {
         type:String,
+        unique: true,
+        trim:true
+    },
+    includes: {
+        type:String,
+        trim:true
+    },
+    noOfSeats: {
+        type:Number,
         trim:true
     },
 },
@@ -10,5 +19,5 @@ const carCategorySchema = new mongoose.Schema({
     timestamps: { createdAt: 'created_at', updatedAt: 'updated_at' }
 })
 
-const carCategoryModel = mongoose.model('Location',carCategorySchema);
+const carCategoryModel = mongoose.model('CarCategory',carCategorySchema);
 export default carCategoryModel;
