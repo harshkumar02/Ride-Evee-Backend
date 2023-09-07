@@ -26,13 +26,13 @@ const addCarCategory= async (req,res)=>{
 }
 
 const deleteCarCategory = async (req,res)=>{
-    const {carCategory}=req.body;
-    if(carCategory){
-        const carCat = await CarCatModel.findOne({ carCategory:carCategory });
+    const {id}=req.params.id;
+    if(id){
+        const carCat = await CarCatModel.findById(id);
     if(carCat){
         
                 try{
-                const result= await CarCatModel.deleteOne({carCategory});
+                const result= await CarCatModel.deleteOne({id});
                 console.log(result);
                 res.status(200).json({  message: "car category deleted" });
                 }catch(err){
@@ -49,9 +49,10 @@ const deleteCarCategory = async (req,res)=>{
 }
 
 const updateCarCatCategory = async (req,res)=>{
-    const {carCategory,newcarCategory,noOfSeats,categoryDescription} = req.body;
-    if(carCategory){
-        const carCat = await CarCatModel.findOne({carCategory: carCategory });
+    const {id}=req.params.id;
+    const {newcarCategory,noOfSeats,categoryDescription} = req.body;
+    if(id){
+        const carCat = await CarCatModel.findById(id);
         if(carCat){
                 try{
                 if(!newcarCategory){
@@ -90,4 +91,18 @@ const updateCarCatCategory = async (req,res)=>{
     }
 }
 
-export {addCarCategory, updateCarCatCategory, deleteCarCategory};
+const allCarCategory=async(req,res)=>{
+    try {
+        const categories = await CarCatModel.find({},'carCatgory'); 
+        if(categories===0){
+            res.status(400).json({message:"No categories found"});
+        }else{
+            res.status(200).json({categories});
+        }
+    } catch (error) {
+        console.log(error);
+        res.status(400).json({message:"retry please."});
+    }
+}
+
+export {addCarCategory, updateCarCatCategory, deleteCarCategory,allCarCategory};
