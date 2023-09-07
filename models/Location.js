@@ -1,10 +1,18 @@
 import mongoose from "mongoose";
 
 const locationSchema = new mongoose.Schema({
-    location: {
+    cityState: {
         type:String,
         trim:true
     },
+    pincode: {
+        type:String,
+        trim:true
+    },
+    status: {
+        type: Boolean,
+        default: true
+    }
 },
 {
     timestamps: { createdAt: 'created_at', updatedAt: 'updated_at' }
