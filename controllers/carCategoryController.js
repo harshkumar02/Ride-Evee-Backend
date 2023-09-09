@@ -46,32 +46,32 @@ const updateCarCatCategory = async (req,res)=>{
         const carCat = await CarCatModel.findById(id);
         if(carCat){
                 try{
-                if(!newcarCategory){
-                    newcarCategory=carCat.carCategory;
+                if(!category){
+                    category= carCat.category;
                 }
                 if(!noOfSeats){
-                    noOfSeats=carCat.noOfSeats;
+                    noOfSeats = carCat.noOfSeats;
                 }
-                if(!categoryDescription){
-                    categoryDescription=carCat.categoryDescription;
+                if(!includes){
+                    includes = carCat.includes;
                 }
-                const result= await CarCatModel.findByIdAndUpdate(
+                const data = await CarCatModel.findByIdAndUpdate(
                     { _id: carCat.id },
                     {
-                        carCategory:newcarCategory,
+                        category: category,
                     },
                     {
-                        noOfSeats:noOfSeats,
+                        noOfSeats: noOfSeats,
                     },
                     {
-                        categoryDescription:categoryDescription,
+                        includes: includes,
                     }
                 );
-                console.log(result);
-                res.status(200).json({  message: "car category updated",result });
+                console.log(data);
+                res.status(200).json({ message: "car category updated", data: data });
                 }catch(err){
                 console.log(err);
-                res.status(400).json({error:err, message: "Unable to update car category"});
+                res.status(400).json({error: err, message: "Unable to update car category"});
                 }  
         }
         else{
@@ -84,11 +84,11 @@ const updateCarCatCategory = async (req,res)=>{
 
 const allCarCategory=async(req,res)=>{
     try {
-        const categories = await CarCatModel.find({},'carCatgory'); 
-        if(categories===0){
+        const categories = await CarCatModel.find({}); 
+        if(!categories){
             res.status(400).json({message:"No categories found"});
         }else{
-            res.status(200).json({categories});
+            res.status(200).json({ message: "All categories", data: categories });
         }
     } catch (error) {
         console.log(error);
