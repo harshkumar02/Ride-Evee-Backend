@@ -1,22 +1,16 @@
-import  BookingModel from '../models/Booking.js';
-const rideOne= async (req,res)=>{
+import BookingModel from '../models/Booking.js';
+const rideOne = async (req,res)=>{
     const rideId = req.params.id;
-    console.log(rideId);
-    if(rideId){
-        const ride = await BookingModel.findById({rideId});
-        if(!ride){
-                res.json("Please provide right ID.");
-        }else {
-            try{
-                res.status(200).json({ message:"data responded",ride:ride });
-            }catch(err){
-                console.log(err);
-                res.status(400).json({error:err, message:"data is not responded"});
-            }
-          }
-    }else {
-        res.json("Please provide ID.");
-      }
+    try{
+    const ride = await BookingModel.findById(rideId);
+    if(!ride)
+        res.status(400).json({ message: "Please provide right ID" });
+    
+        res.status(200).json({ message:"Ride is fetched",data: ride });
+    }catch(err){
+        console.log(err);
+        res.status(400).json({error:err, message:"data is not responded"});
+    }
 }
 
 const rideQuery = async (req, res)=>{
