@@ -17,6 +17,15 @@ connectDB(MONGO_URI);
 const app = express();
 
 app.use(express.json());
+app.use(cors())
+app.use((req, res, next) => {
+  res.header('Access-Control-Allow-Origin', '*')
+  res.setHeader("Access-Control-Allow-Credentials", "true")
+  res.setHeader("Access-Control-Max-Age", "1800")
+  res.setHeader("Access-Control-Allow-Headers", "content-type")
+  res.setHeader( "Access-Control-Allow-Methods", "PUT, POST, GET, DELETE, PATCH, OPTIONS" )
+  next()
+  })
 app.use(
   cookieSession({
     name: "session",
@@ -28,13 +37,6 @@ app.use(
 app.use(passport.initialize());
 app.use(passport.session());
 
-app.use(
-  cors({
-    origin: "http://localhost:3000",
-    methods: "GET, POST,PUT,DELETE,UPDATE",
-    credential: true,
-  })
-);
 
 app.get("/", (req, res) => {
   res.send("API is running....");
