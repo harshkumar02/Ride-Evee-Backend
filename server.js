@@ -8,6 +8,7 @@ import passport from "passport";
 import cors from "cors";
 import passportSetup from "./utils/passport.js";
 import GoogleAuth from "./routes/googleAuthRoutes.js";
+import carCategoryRoutes from "./routes/carCategoryRoutes.js";
 
 dotenv.config();
 const MONGO_URI = process.env.MONGO_URI;
@@ -45,6 +46,7 @@ app.get("/", (req, res) => {
 app.use("/api/user", userRoutes);
 app.use("/api/driver", driverRoutes);
 app.use("/googleAuth", GoogleAuth);
+app.use("/api/carCategory",carCategoryRoutes);
 
 const PORT = process.env.PORT || 5000;
 

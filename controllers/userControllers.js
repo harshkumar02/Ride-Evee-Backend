@@ -70,6 +70,59 @@ class UserController {
       res.send({ status: "failed", message: "Unable to Login" });
     }
   };
+
+  static userProfileUpdate = async(req,res)=>{
+    const id = req.params.id;
+      console.log(id);
+      let {newName, newEmail, newPhone,newCity,newState, newPincode}= req.body;
+      console.log(req.body);
+      if(id){
+        const user = await UserModel.findById(id);
+        if(user.length===0){
+          res.status(404).json({message:"User Not Found"});
+        }else{
+          try {
+            if(!newName){
+              newName=user.name;
+            }
+            if(!newEmail){
+              newEmail=user.email;
+            }
+            if(!newPhone){
+              newPhone=user.phone;
+            }
+            if(!newCity){
+              newCity=user.address.city;
+            }
+            if(!newState){
+              newState=user.address.state;
+            }
+            if(!newPincode){
+              newPincode=user.address.pincode;
+            }
+            const updateData={
+              name:newName,
+              email:newEmail,
+              phone:newPhone,
+              address:{
+                city:newCity,
+                state:newState,
+                pincode:newPincode
+              }
+            }
+            const result= await UserModel.findByIdAndUpdate(user.id, updateData,{new:true}
+            ).then(console.log("successfull"))
+            
+            res.status(200).json({message:"profile Updated",result});
+          } catch (error) {
+            console.log(error);
+            res.status(400).json({message:error});
+          }
+        }
+      }else{
+        res.status(400).json({message:"Provide id"})
+      }
+  }
 }
 
 export default UserController;
