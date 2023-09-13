@@ -41,7 +41,7 @@ const deleteCarCategory = async (req,res)=>{
 
 const updateCarCatCategory = async (req,res)=>{
     const id = req.params.id;
-    const {category, noOfSeats, includes} = req.body;
+    let {category, noOfSeats, includes} = req.body;
     if(id){
         const carCat = await CarCatModel.findById(id);
         if(carCat){
